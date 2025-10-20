@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'Adhésion - Ailes d'Espoir</title>
+    <link rel="stylesheet" href="inscription_2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // تهيئة EmailJS
+        (function(){
+            emailjs.init("V6ljV-1rPNp6gHi4F");
+        })();
+    </script>
+    
+    
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="page-container">
+        <div class="page-header">
+            <div class="logo-wrapper">
+                <div class="logo-container">🕊️</div>
+            </div>
+            <h1>Ailes d'Espoir</h1>
+            <p class="subtitle">Formulaire d'Adhésion</p>
+            <p class="description">
+                Merci de votre intérêt pour rejoindre notre association. Veuillez remplir ce formulaire avec attention. 
+                Toutes vos informations seront traitées de manière confidentielle.
+            </p>
+        </div>
+
+        <div class="container">
+            <div class="progress-wrapper">
+                <div class="progress-info">
+                    <span class="progress-text">Progression du formulaire</span>
+                    <span class="progress-percentage" id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+            </div>
+
+            <div class="form-content">
+                <div class="alert success" id="successAlert">
+                    <span class="alert-icon">✅</span>
+                    Votre candidature a été soumise avec succès !
+                </div>
+
+                <div class="alert error" id="errorAlert">
+                    <span class="alert-icon">⚠️</span>
+                    Veuillez remplir tous les champs obligatoires.
+                </div>
+
+                <form id="adhesionForm" novalidate>
+                    <!-- Section 1: Informations personnelles -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-number">1</div>
+                            <div>
+                                <h2 class="section-title">Informations personnelles</h2>
+                                <p class="section-subtitle">Vos coordonnées de contact</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nom">Nom complet <span class="required">*</span></label>
+                                <input type="text" id="nom" name="nom" placeholder="Ex: Mohammed Alami" required>
+                                <p class="help-text">Nom et prénom</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Adresse email <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telephone">Numéro de téléphone <span class="required">*</span></label>
+                                <input type="tel" id="telephone" name="telephone" placeholder="+212 6XX XXX XXX" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ville">Ville de résidence <span class="required">*</span></label>
+                                <input type="text" id="ville" name="ville" placeholder="Ex: Casablanca" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Motivation -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-number">2</div>
+                            <div>
+                                <h2 class="section-title">Motivation</h2>
+                                <p class="section-subtitle">Partagez avec nous vos motivations</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pourquoi">Pourquoi souhaitez-vous rejoindre Ailes d'Espoir ? <span class="required">*</span></label>
+                            <textarea id="pourquoi" name="pourquoi" placeholder="Exprimez vos motivations..." required></textarea>
+                            <p class="help-text">Minimum 50 caractères</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apporter">Qu'est-ce que vous aimeriez apporter à l'association ? <span class="required">*</span></label>
+                            <textarea id="apporter" name="apporter" placeholder="Décrivez ce que vous pouvez offrir..." required></textarea>
+                            <p class="help-text">Minimum 50 caractères</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Disponibilité -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-number">3</div>
+                            <div>
+                                <h2 class="section-title">Disponibilité</h2>
+                                <p class="section-subtitle">Indiquez votre engagement temporel</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>À quelle fréquence pourriez-vous participer ? <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-item" onclick="selectRadio('regulier')">
+                                    <input type="radio" id="regulier" name="frequence" value="Régulièrement (chaque semaine)" required>
+                                    <label for="regulier">
+                                        Régulièrement (chaque semaine)
+                                        <span class="description">Engagement hebdomadaire dans les activités</span>
+                                    </label>
+                                </div>
+                                <div class="radio-item" onclick="selectRadio('occasionnel')">
+                                    <input type="radio" id="occasionnel" name="frequence" value="Occasionnellement (selon les besoins)">
+                                    <label for="occasionnel">
+                                        Occasionnellement (selon les besoins)
+                                        <span class="description">Participation flexible selon vos disponibilités</span>
+                                    </label>
+                                </div>
+                                <div class="radio-item" onclick="selectRadio('evenements')">
+                                    <input type="radio" id="evenements" name="frequence" value="Pour des événements spécifiques">
+                                    <label for="evenements">
+                                        Pour des événements spécifiques
+                                        <span class="description">Présence lors d'événements ponctuels</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Compétences -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-number">4</div>
+                            <div>
+                                <h2 class="section-title">Compétences</h2>
+                                <p class="section-subtitle">Domaines où vous souhaitez contribuer</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dans quels domaines souhaitez-vous contribuer ? <span class="required">*</span></label>
+                            <p class="help-text">Sélectionnez au moins une option</p>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item" onclick="toggleCheckbox('communication')">
+                                    <input type="checkbox" id="communication" name="competences" value="Communication / réseaux sociaux">
+                                    <label for="communication">
+                                        Communication / Réseaux sociaux
+                                        <span class="description">Gestion des médias sociaux, création de contenu</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item" onclick="toggleCheckbox('logistique')">
+                                    <input type="checkbox" id="logistique" name="competences" value="Logistique / organisation">
+                                    <label for="logistique">
+                                        Logistique / Organisation
+                                        <span class="description">Planification d'événements, coordination</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item" onclick="toggleCheckbox('collectes')">
+                                    <input type="checkbox" id="collectes" name="competences" value="Collectes de fonds">
+                                    <label for="collectes">
+                                        Collectes de fonds
+                                        <span class="description">Recherche de financements, campagnes de levée de fonds</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item" onclick="toggleCheckbox('aide')">
+                                    <input type="checkbox" id="aide" name="competences" value="Aide directe (ex. distribution, accompagnement)">
+                                    <label for="aide">
+                                        Aide directe
+                                        <span class="description">Distribution, accompagnement sur le terrain</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item" onclick="toggleCheckbox('autres')">
+                                    <input type="checkbox" id="autres" name="competences" value="Autres">
+                                    <label for="autres">
+                                        Autres compétences
+                                        <span class="description">Précisez vos compétences spécifiques</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="text" id="autresInput" class="autres-input" placeholder="Précisez vos autres compétences...">
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Type d'adhésion -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-number">5</div>
+                            <div>
+                                <h2 class="section-title">Type d'adhésion</h2>
+                                <p class="section-subtitle">Choisissez votre niveau d'engagement</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Type d'adhésion souhaité <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-item" onclick="selectRadio('actif')">
+                                    <input type="radio" id="actif" name="adhesion" value="Membre actif (participation aux activités)" required>
+                                    <label for="actif">
+                                        Membre actif
+                                        <span class="description">Participation active aux activités et projets de l'association</span>
+                                    </label>
+                                </div>
+                                <div class="radio-item" onclick="selectRadio('sympathisant')">
+                                    <input type="radio" id="sympathisant" name="adhesion" value="Membre sympathisant (soutien moral/financier)">
+                                    <label for="sympathisant">
+                                        Membre sympathisant
+                                        <span class="description">Soutien moral et/ou financier sans engagement actif régulier</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="reset-btn" onclick="resetForm()">
+                            🔄 Réinitialiser
+                        </button>
+                        <button type="submit" class="submit-btn">
+                            <span>📤</span>
+                            Soumettre ma candidature
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de résultats -->
+    <div class="result-modal" id="resultModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✅ Candidature soumise avec succès</h2>
+                <p>Récapitulatif de vos informations</p>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mise à jour de la barre de progression
+        function updateProgress() {
+            const form = document.getElementById('adhesionForm');
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            let filled = 0;
+            let total = 0;
+
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    if (!document.querySelector(`input[name="${name}"].counted`)) {
+                        total++;
+                        document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.classList.add('counted'));
+                        if (document.querySelector(`input[name="${name}"]:checked`)) {
+                            filled++;
+                        }
+                    }
+                } else if (input.type === 'checkbox') {
+                    if (!input.classList.contains('counted-checkbox')) {
+                        total++;
+                        input.classList.add('counted-checkbox');
+                        if (document.querySelectorAll('input[name="competences"]:checked').length > 0) {
+                            filled++;
+                        }
+                    }
+                } else if (input.value.trim() !== '') {
+                    filled++;
+                }
+            });
+
+            const textInputs = form.querySelectorAll('input[type="text"]:not(.autres-input), input[type="email"], input[type="tel"], textarea');
+            total += textInputs.length;
+
+            const progress = Math.round((filled / total) * 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressPercentage').textContent = progress + '%';
+        }
+
+        function resetCounters() {
+            document.querySelectorAll('.counted, .counted-checkbox').forEach(el => {
+                el.classList.remove('counted', 'counted-checkbox');
+            });
+        }
+
+        document.getElementById('adhesionForm').addEventListener('input', () => {
+            resetCounters();
+            updateProgress();
+        });
+
+        document.getElementById('adhesionForm').addEventListener('change', () => {
+            resetCounters();
+            updateProgress();
+        });
+
+        document.getElementById('autres').addEventListener('change', function() {
+            const autresInput = document.getElementById('autresInput');
+            if (this.checked) {
+                autresInput.style.display = 'block';
+            } else {
+                autresInput.style.display = 'none';
+                autresInput.value = '';
+            }
+        });
+
+        function selectRadio(id) {
+            document.getElementById(id).checked = true;
+            updateRadioStyles();
+            resetCounters();
+            updateProgress();
+        }
+
+        function updateRadioStyles() {
+            document.querySelectorAll('.radio-item').forEach(item => {
+                const radio = item.querySelector('input[type="radio"]');
+                if (radio.checked) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        function toggleCheckbox(id) {
+            const checkbox = document.getElementById(id);
+            checkbox.checked = !checkbox.checked;
+            updateCheckboxStyles();
+            resetCounters();
+            updateProgress();
+            
+            if (id === 'autres') {
+                const autresInput = document.getElementById('autresInput');
+                autresInput.style.display = checkbox.checked ? 'block' : 'none';
+            }
+        }
+
+        function updateCheckboxStyles() {
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox.checked) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', updateRadioStyles);
+        });
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateCheckboxStyles);
+        });
+
+        function validateForm() {
+            const form = document.getElementById('adhesionForm');
+            let isValid = true;
+            let errors = [];
+
+            const nom = document.getElementById('nom').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const ville = document.getElementById('ville').value.trim();
+            const pourquoi = document.getElementById('pourquoi').value.trim();
+            const apporter = document.getElementById('apporter').value.trim();
+
+            if (nom === '') {
+                errors.push('Le nom est requis');
+                isValid = false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errors.push('Email invalide');
+                isValid = false;
+            }
+
+            if (telephone === '') {
+                errors.push('Le téléphone est requis');
+                isValid = false;
+            }
+
+            if (ville === '') {
+                errors.push('La ville est requise');
+                isValid = false;
+            }
+
+            if (pourquoi.length < 50) {
+                errors.push('La motivation doit contenir au moins 50 caractères');
+                isValid = false;
+            }
+
+            if (apporter.length < 50) {
+                errors.push('La contribution doit contenir au moins 50 caractères');
+                isValid = false;
+            }
+
+            if (!document.querySelector('input[name="frequence"]:checked')) {
+                errors.push('Veuillez sélectionner une fréquence de participation');
+                isValid = false;
+            }
+
+            const competences = document.querySelectorAll('input[name="competences"]:checked');
+            if (competences.length === 0) {
+                errors.push('Veuillez sélectionner au moins une compétence');
+                isValid = false;
+            }
+
+            if (!document.querySelector('input[name="adhesion"]:checked')) {
+                errors.push('Veuillez sélectionner un type d\'adhésion');
+                isValid = false;
+            }
+
+            return { isValid, errors };
+        }
+
+        document.getElementById('adhesionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const validation = validateForm();
+            
+            if (!validation.isValid) {
+                const errorAlert = document.getElementById('errorAlert');
+                errorAlert.innerHTML = '<span class="alert-icon">⚠️</span>' + validation.errors.join(', ');
+                errorAlert.style.display = 'block';
+                
+                errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                setTimeout(() => {
+                    errorAlert.style.display = 'none';
+                }, 5000);
+                
+                return;
+            }
+
+            const formData = {
+                nom: document.getElementById('nom').value,
+                email: document.getElementById('email').value,
+                telephone: document.getElementById('telephone').value,
+                ville: document.getElementById('ville').value,
+                pourquoi: document.getElementById('pourquoi').value,
+                apporter: document.getElementById('apporter').value,
+                frequence: document.querySelector('input[name="frequence"]:checked').value,
+                competences: [],
+                adhesion: document.querySelector('input[name="adhesion"]:checked').value,
+                dateSubmission: new Date().toLocaleString('fr-FR')
+            };
+
+            const competencesChecked = document.querySelectorAll('input[name="competences"]:checked');
+            competencesChecked.forEach(comp => {
+                if (comp.id === 'autres' && document.getElementById('autresInput').value) {
+                    formData.competences.push(`Autres: ${document.getElementById('autresInput').value}`);
+                } else if (comp.id !== 'autres') {
+                    formData.competences.push(comp.value);
+                }
+            });
+
+            // تعطيل الزر أثناء الإرسال
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
+
+            // إرسال البريد الإلكتروني
+            sendEmail(formData, submitBtn);
+        });
+
+        function sendEmail(data, submitBtn) {
+            // تحضير البيانات للإرسال
+            const templateParams = {
+                nom: data.nom,
+                email: data.email,
+                telephone: data.telephone,
+                ville: data.ville,
+                pourquoi: data.pourquoi,
+                apporter: data.apporter,
+                frequence: data.frequence,
+                competences: data.competences.join(', '),
+                adhesion: data.adhesion,
+                date: data.dateSubmission
+            };
+
+            // إرسال الإيميل باستخدام EmailJS
+            emailjs.send('service_projet', 'template_ith7bvf', templateParams)
+                .then(function(response) {
+                    console.log('Email envoyé avec succès!', response.status, response.text);
+                    
+                    // حفظ البيانات
+                    window.candidatureData = data;
+                    
+                    // عرض النتائج
+                    displayResults(data);
+
+                    // رسالة النجاح
+                    const successAlert = document.getElementById('successAlert');
+                    successAlert.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        successAlert.style.display = 'none';
+                    }, 3000);
+
+                    // إعادة تفعيل الزر
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>📤</span> Soumettre ma candidature';
+
+                }, function(error) {
+                    console.error('Erreur lors de l\'envoi:', error);
+                    
+                    // رسالة خطأ
+                    const errorAlert = document.getElementById('errorAlert');
+                    errorAlert.innerHTML = '<span class="alert-icon">❌</span> Erreur lors de l\'envoi. Veuillez réessayer.';
+                    errorAlert.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        errorAlert.style.display = 'none';
+                    }, 5000);
+
+                    // إعادة تفعيل الزر
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>📤</span> Soumettre ma candidature';
+                });
+        }
+
+        function displayResults(data) {
+            const modalBody = document.getElementById('modalBody');
+            
+            const html = `
+                <div class="result-section">
+                    <h3>👤 Informations personnelles</h3>
+                    <div class="result-item">
+                        <span class="result-label">Nom complet:</span>
+                        <span class="result-value">${data.nom}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Email:</span>
+                        <span class="result-value">${data.email}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Téléphone:</span>
+                        <span class="result-value">${data.telephone}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Ville:</span>
+                        <span class="result-value">${data.ville}</span>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h3>💭 Motivation</h3>
+                    <div class="result-item">
+                        <span class="result-label">Pourquoi rejoindre:</span>
+                        <span class="result-value">${data.pourquoi}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Contribution:</span>
+                        <span class="result-value">${data.apporter}</span>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h3>📅 Disponibilité et Engagement</h3>
+                    <div class="result-item">
+                        <span class="result-label">Fréquence:</span>
+                        <span class="result-value">${data.frequence}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Type d'adhésion:</span>
+                        <span class="result-value">${data.adhesion}</span>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h3>💼 Compétences</h3>
+                    <div class="result-item">
+                        <span class="result-label">Domaines:</span>
+                        <span class="result-value">${data.competences.join(' • ')}</span>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h3>📆 Information de soumission</h3>
+                    <div class="result-item">
+                        <span class="result-label">Date et heure:</span>
+                        <span class="result-value">${data.dateSubmission}</span>
+                    </div>
+                </div>
+            `;
+
+            modalBody.innerHTML = html;
+            document.getElementById('resultModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function resetForm() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ?')) {
+                document.getElementById('adhesionForm').reset();
+                document.getElementById('autresInput').style.display = 'none';
+                document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                resetCounters();
+                updateProgress();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
